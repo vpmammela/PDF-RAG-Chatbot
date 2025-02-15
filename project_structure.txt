@@ -1,0 +1,12 @@
+rag-chatbot/
+├── src/
+│   ├── __init__.py
+│   ├── document_processor.py
+│   ├── embeddings.py
+│   ├── chat.py
+│   └── ui.py
+├── .env
+├── .gitignore
+├── requirements.txt
+├── README.md
+└── main.py 
