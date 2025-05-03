@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 import PyPDF2
 from typing import List
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 logger = logging.getLogger(__name__)
 
@@ -10,17 +11,14 @@ CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
 
 def chunk_text(text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP) -> List[str]:
-    """Split text into overlapping chunks"""
-    chunks = []
-    text_length = len(text)
-    start = 0
-    
-    while start < text_length:
-        end = start + chunk_size
-        chunk = text[start:end]
-        chunks.append(chunk)
-        start = end - overlap
-        
+    """Split text into overlapping chunks using Langchain's RecursiveCharacterTextSplitter"""
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        length_function=len,
+        is_separator_regex=False,
+    )
+    chunks = text_splitter.split_text(text)
     return chunks
 
 def extract_text_from_pdf(file_path: str) -> str:

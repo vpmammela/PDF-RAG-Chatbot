@@ -11,6 +11,11 @@ MAX_RETRIES = 3
 
 # Load environment variables
 load_dotenv()
+
+# Initialize OpenAI client
+if not os.getenv('OPENAI_API_KEY'):
+    raise ValueError("OPENAI_API_KEY environment variable is not set")
+
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 def get_embeddings(text: str, retries: int = MAX_RETRIES) -> List[float]:
